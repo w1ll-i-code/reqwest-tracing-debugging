@@ -1,0 +1,13 @@
+[package]
+name = "reproduce-bug"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+http = "1.2.0"
+reqwest = "0.12.12"
+reqwest-tracing = { version = "0.5.5", features = ["deprecated_attributes"]}
+tracing = "0.1.41"
+
+[features]
+deprecated_attributes = []

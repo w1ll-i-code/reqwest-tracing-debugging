@@ -1,0 +1,1016 @@
+#![feature(prelude_import)]
+#[prelude_import]
+use std::prelude::rust_2021::*;
+#[macro_use]
+extern crate std;
+use reqwest_tracing::reqwest_otel_span;
+fn main() {
+    let req: reqwest::Request = ::core::panicking::panic("not yet implemented");
+    let span = {
+        let method = req.method();
+        let url = req.url();
+        let scheme = url.scheme();
+        let host = url.host_str().unwrap_or("");
+        let host_port = url.port_or_known_default().unwrap_or(0) as i64;
+        let otel_name = "backend_request".to_string();
+        let header_default = &::http::HeaderValue::from_static("");
+        let user_agent = ::alloc::__export::must_use({
+                let res = ::alloc::fmt::format(
+                    format_args!(
+                        "{0:?}",
+                        req.headers().get("user-agent").unwrap_or(header_default),
+                    ),
+                );
+                res
+            })
+            .replace('"', "");
+        let span = match ::reqwest_tracing::reqwest_otel_span_macro::private::Level::INFO {
+            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::TRACE => {
+                use ::tracing::__macro_support::Callsite as _;
+                static __CALLSITE: ::tracing::callsite::DefaultCallsite = {
+                    static META: ::tracing::Metadata<'static> = {
+                        ::tracing_core::metadata::Metadata::new(
+                            "HTTP request",
+                            "reproduce_bug",
+                            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::TRACE,
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce-bug/src/main.rs",
+                            ),
+                            ::tracing_core::__macro_support::Option::Some(6u32),
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce_bug",
+                            ),
+                            ::tracing_core::field::FieldSet::new(
+                                &[
+                                    "http.request.method",
+                                    "url.scheme",
+                                    "server.address",
+                                    "server.port",
+                                    "user_agent.original",
+                                    "otel.kind",
+                                    "otel.name",
+                                    "otel.status_code",
+                                    "http.response.status_code",
+                                    "error.message",
+                                    "error.cause_chain",
+                                    "http.method",
+                                    "http.scheme",
+                                    "http.host",
+                                    "net.host.port",
+                                    "http.user_agent",
+                                    "http.status_code",
+                                ],
+                                ::tracing_core::callsite::Identifier(&__CALLSITE),
+                            ),
+                            ::tracing::metadata::Kind::SPAN,
+                        )
+                    };
+                    ::tracing::callsite::DefaultCallsite::new(&META)
+                };
+                let mut interest = ::tracing::subscriber::Interest::never();
+                if ::reqwest_tracing::reqwest_otel_span_macro::private::Level::TRACE
+                    <= ::tracing::level_filters::STATIC_MAX_LEVEL
+                    && ::reqwest_tracing::reqwest_otel_span_macro::private::Level::TRACE
+                        <= ::tracing::level_filters::LevelFilter::current()
+                    && {
+                        interest = __CALLSITE.interest();
+                        !interest.is_never()
+                    }
+                    && ::tracing::__macro_support::__is_enabled(
+                        __CALLSITE.metadata(),
+                        interest,
+                    )
+                {
+                    let meta = __CALLSITE.metadata();
+                    ::tracing::Span::new(
+                        meta,
+                        &{
+                            #[allow(unused_imports)]
+                            use ::tracing::field::{debug, display, Value};
+                            let mut iter = meta.fields().iter();
+                            meta.fields()
+                                .value_set(
+                                    &[
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&user_agent) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &"client" as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&otel_name) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                    ],
+                                )
+                        },
+                    )
+                } else {
+                    let span = ::tracing::__macro_support::__disabled_span(
+                        __CALLSITE.metadata(),
+                    );
+                    {};
+                    span
+                }
+            }
+            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::DEBUG => {
+                use ::tracing::__macro_support::Callsite as _;
+                static __CALLSITE: ::tracing::callsite::DefaultCallsite = {
+                    static META: ::tracing::Metadata<'static> = {
+                        ::tracing_core::metadata::Metadata::new(
+                            "HTTP request",
+                            "reproduce_bug",
+                            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::DEBUG,
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce-bug/src/main.rs",
+                            ),
+                            ::tracing_core::__macro_support::Option::Some(6u32),
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce_bug",
+                            ),
+                            ::tracing_core::field::FieldSet::new(
+                                &[
+                                    "http.request.method",
+                                    "url.scheme",
+                                    "server.address",
+                                    "server.port",
+                                    "user_agent.original",
+                                    "otel.kind",
+                                    "otel.name",
+                                    "otel.status_code",
+                                    "http.response.status_code",
+                                    "error.message",
+                                    "error.cause_chain",
+                                    "http.method",
+                                    "http.scheme",
+                                    "http.host",
+                                    "net.host.port",
+                                    "http.user_agent",
+                                    "http.status_code",
+                                ],
+                                ::tracing_core::callsite::Identifier(&__CALLSITE),
+                            ),
+                            ::tracing::metadata::Kind::SPAN,
+                        )
+                    };
+                    ::tracing::callsite::DefaultCallsite::new(&META)
+                };
+                let mut interest = ::tracing::subscriber::Interest::never();
+                if ::reqwest_tracing::reqwest_otel_span_macro::private::Level::DEBUG
+                    <= ::tracing::level_filters::STATIC_MAX_LEVEL
+                    && ::reqwest_tracing::reqwest_otel_span_macro::private::Level::DEBUG
+                        <= ::tracing::level_filters::LevelFilter::current()
+                    && {
+                        interest = __CALLSITE.interest();
+                        !interest.is_never()
+                    }
+                    && ::tracing::__macro_support::__is_enabled(
+                        __CALLSITE.metadata(),
+                        interest,
+                    )
+                {
+                    let meta = __CALLSITE.metadata();
+                    ::tracing::Span::new(
+                        meta,
+                        &{
+                            #[allow(unused_imports)]
+                            use ::tracing::field::{debug, display, Value};
+                            let mut iter = meta.fields().iter();
+                            meta.fields()
+                                .value_set(
+                                    &[
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&user_agent) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &"client" as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&otel_name) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                    ],
+                                )
+                        },
+                    )
+                } else {
+                    let span = ::tracing::__macro_support::__disabled_span(
+                        __CALLSITE.metadata(),
+                    );
+                    {};
+                    span
+                }
+            }
+            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::INFO => {
+                use ::tracing::__macro_support::Callsite as _;
+                static __CALLSITE: ::tracing::callsite::DefaultCallsite = {
+                    static META: ::tracing::Metadata<'static> = {
+                        ::tracing_core::metadata::Metadata::new(
+                            "HTTP request",
+                            "reproduce_bug",
+                            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::INFO,
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce-bug/src/main.rs",
+                            ),
+                            ::tracing_core::__macro_support::Option::Some(6u32),
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce_bug",
+                            ),
+                            ::tracing_core::field::FieldSet::new(
+                                &[
+                                    "http.request.method",
+                                    "url.scheme",
+                                    "server.address",
+                                    "server.port",
+                                    "user_agent.original",
+                                    "otel.kind",
+                                    "otel.name",
+                                    "otel.status_code",
+                                    "http.response.status_code",
+                                    "error.message",
+                                    "error.cause_chain",
+                                    "http.method",
+                                    "http.scheme",
+                                    "http.host",
+                                    "net.host.port",
+                                    "http.user_agent",
+                                    "http.status_code",
+                                ],
+                                ::tracing_core::callsite::Identifier(&__CALLSITE),
+                            ),
+                            ::tracing::metadata::Kind::SPAN,
+                        )
+                    };
+                    ::tracing::callsite::DefaultCallsite::new(&META)
+                };
+                let mut interest = ::tracing::subscriber::Interest::never();
+                if ::reqwest_tracing::reqwest_otel_span_macro::private::Level::INFO
+                    <= ::tracing::level_filters::STATIC_MAX_LEVEL
+                    && ::reqwest_tracing::reqwest_otel_span_macro::private::Level::INFO
+                        <= ::tracing::level_filters::LevelFilter::current()
+                    && {
+                        interest = __CALLSITE.interest();
+                        !interest.is_never()
+                    }
+                    && ::tracing::__macro_support::__is_enabled(
+                        __CALLSITE.metadata(),
+                        interest,
+                    )
+                {
+                    let meta = __CALLSITE.metadata();
+                    ::tracing::Span::new(
+                        meta,
+                        &{
+                            #[allow(unused_imports)]
+                            use ::tracing::field::{debug, display, Value};
+                            let mut iter = meta.fields().iter();
+                            meta.fields()
+                                .value_set(
+                                    &[
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&user_agent) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &"client" as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&otel_name) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                    ],
+                                )
+                        },
+                    )
+                } else {
+                    let span = ::tracing::__macro_support::__disabled_span(
+                        __CALLSITE.metadata(),
+                    );
+                    {};
+                    span
+                }
+            }
+            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::WARN => {
+                use ::tracing::__macro_support::Callsite as _;
+                static __CALLSITE: ::tracing::callsite::DefaultCallsite = {
+                    static META: ::tracing::Metadata<'static> = {
+                        ::tracing_core::metadata::Metadata::new(
+                            "HTTP request",
+                            "reproduce_bug",
+                            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::WARN,
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce-bug/src/main.rs",
+                            ),
+                            ::tracing_core::__macro_support::Option::Some(6u32),
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce_bug",
+                            ),
+                            ::tracing_core::field::FieldSet::new(
+                                &[
+                                    "http.request.method",
+                                    "url.scheme",
+                                    "server.address",
+                                    "server.port",
+                                    "user_agent.original",
+                                    "otel.kind",
+                                    "otel.name",
+                                    "otel.status_code",
+                                    "http.response.status_code",
+                                    "error.message",
+                                    "error.cause_chain",
+                                    "http.method",
+                                    "http.scheme",
+                                    "http.host",
+                                    "net.host.port",
+                                    "http.user_agent",
+                                    "http.status_code",
+                                ],
+                                ::tracing_core::callsite::Identifier(&__CALLSITE),
+                            ),
+                            ::tracing::metadata::Kind::SPAN,
+                        )
+                    };
+                    ::tracing::callsite::DefaultCallsite::new(&META)
+                };
+                let mut interest = ::tracing::subscriber::Interest::never();
+                if ::reqwest_tracing::reqwest_otel_span_macro::private::Level::WARN
+                    <= ::tracing::level_filters::STATIC_MAX_LEVEL
+                    && ::reqwest_tracing::reqwest_otel_span_macro::private::Level::WARN
+                        <= ::tracing::level_filters::LevelFilter::current()
+                    && {
+                        interest = __CALLSITE.interest();
+                        !interest.is_never()
+                    }
+                    && ::tracing::__macro_support::__is_enabled(
+                        __CALLSITE.metadata(),
+                        interest,
+                    )
+                {
+                    let meta = __CALLSITE.metadata();
+                    ::tracing::Span::new(
+                        meta,
+                        &{
+                            #[allow(unused_imports)]
+                            use ::tracing::field::{debug, display, Value};
+                            let mut iter = meta.fields().iter();
+                            meta.fields()
+                                .value_set(
+                                    &[
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&user_agent) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &"client" as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&otel_name) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                    ],
+                                )
+                        },
+                    )
+                } else {
+                    let span = ::tracing::__macro_support::__disabled_span(
+                        __CALLSITE.metadata(),
+                    );
+                    {};
+                    span
+                }
+            }
+            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::ERROR => {
+                use ::tracing::__macro_support::Callsite as _;
+                static __CALLSITE: ::tracing::callsite::DefaultCallsite = {
+                    static META: ::tracing::Metadata<'static> = {
+                        ::tracing_core::metadata::Metadata::new(
+                            "HTTP request",
+                            "reproduce_bug",
+                            ::reqwest_tracing::reqwest_otel_span_macro::private::Level::ERROR,
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce-bug/src/main.rs",
+                            ),
+                            ::tracing_core::__macro_support::Option::Some(6u32),
+                            ::tracing_core::__macro_support::Option::Some(
+                                "reproduce_bug",
+                            ),
+                            ::tracing_core::field::FieldSet::new(
+                                &[
+                                    "http.request.method",
+                                    "url.scheme",
+                                    "server.address",
+                                    "server.port",
+                                    "user_agent.original",
+                                    "otel.kind",
+                                    "otel.name",
+                                    "otel.status_code",
+                                    "http.response.status_code",
+                                    "error.message",
+                                    "error.cause_chain",
+                                    "http.method",
+                                    "http.scheme",
+                                    "http.host",
+                                    "net.host.port",
+                                    "http.user_agent",
+                                    "http.status_code",
+                                ],
+                                ::tracing_core::callsite::Identifier(&__CALLSITE),
+                            ),
+                            ::tracing::metadata::Kind::SPAN,
+                        )
+                    };
+                    ::tracing::callsite::DefaultCallsite::new(&META)
+                };
+                let mut interest = ::tracing::subscriber::Interest::never();
+                if ::reqwest_tracing::reqwest_otel_span_macro::private::Level::ERROR
+                    <= ::tracing::level_filters::STATIC_MAX_LEVEL
+                    && ::reqwest_tracing::reqwest_otel_span_macro::private::Level::ERROR
+                        <= ::tracing::level_filters::LevelFilter::current()
+                    && {
+                        interest = __CALLSITE.interest();
+                        !interest.is_never()
+                    }
+                    && ::tracing::__macro_support::__is_enabled(
+                        __CALLSITE.metadata(),
+                        interest,
+                    )
+                {
+                    let meta = __CALLSITE.metadata();
+                    ::tracing::Span::new(
+                        meta,
+                        &{
+                            #[allow(unused_imports)]
+                            use ::tracing::field::{debug, display, Value};
+                            let mut iter = meta.fields().iter();
+                            meta.fields()
+                                .value_set(
+                                    &[
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&user_agent) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &"client" as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&otel_name) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&method) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&scheme) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &display(&host_port) as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                        (
+                                            &::tracing::__macro_support::Iterator::next(&mut iter)
+                                                .expect("FieldSet corrupted (this is a bug)"),
+                                            ::tracing::__macro_support::Option::Some(
+                                                &tracing::field::Empty as &dyn Value,
+                                            ),
+                                        ),
+                                    ],
+                                )
+                        },
+                    )
+                } else {
+                    let span = ::tracing::__macro_support::__disabled_span(
+                        __CALLSITE.metadata(),
+                    );
+                    {};
+                    span
+                }
+            }
+        };
+        span
+    };
+}
