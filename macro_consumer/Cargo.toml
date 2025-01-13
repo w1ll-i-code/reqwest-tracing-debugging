@@ -1,0 +1,10 @@
+[package]
+name = "macro_consumer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+nested_macros = { path = "../nested_macros", features = ["my_feature"]}
+
+[features]
+my_feature = []
